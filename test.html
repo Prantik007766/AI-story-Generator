@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - AI Story Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+        button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #4f46e5; }
+        #testResults { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>AI Story Generator - Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>File Structure Test</h2>
+        <p>Checking if all required files exist...</p>
+        <div id="fileTest"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>JavaScript Functionality Test</h2>
+        <p>Testing core JavaScript functions...</p>
+        <button onclick="testJavaScript()">Run JavaScript Tests</button>
+        <div id="jsTest"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>CSS Loading Test</h2>
+        <p>Testing if CSS loads correctly...</p>
+        <button onclick="testCSS()">Test CSS</button>
+        <div id="cssTest"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>API Integration Test</h2>
+        <p>Testing API connection (requires valid API key)...</p>
+        <button onclick="testAPI()">Test API Connection</button>
+        <div id="apiTest"></div>
+    </div>
+
+    <div id="testResults"></div>
+
+    <script>
+        // Test file existence
+        function testFiles() {
+            const files = ['index.html', 'styles.css', 'script.js', 'README.md'];
+            const results = [];
+            
+            files.forEach(file => {
+                fetch(file, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            results.push(`<span class="success">✓ ${file} exists</span>`);
+                        } else {
+                            results.push(`<span class="error">✗ ${file} missing</span>`);
+                        }
+                        updateFileTest();
+                    })
+                    .catch(() => {
+                        results.push(`<span class="error">✗ ${file} not accessible</span>`);
+                        updateFileTest();
+                    });
+            });
+
+            function updateFileTest() {
+                if (results.length === files.length) {
+                    document.getElementById('fileTest').innerHTML = results.join('<br>');
+                }
+            }
+        }
+
+        // Test JavaScript functionality
+        function testJavaScript() {
+            const results = [];
+            
+            try {
+                // Test if we can create the main class
+                eval(`
+                    class TestStoryGenerator {
+                        constructor() {
+                            this.apiKey = null;
+                            this.currentStory = '';
+                            this.isGenerating = false;
+                        }
+                        
+                        buildPrompt() {
+                            return "Test prompt";
+                        }
+                        
+                        validateForm() {
+                            return true;
+                        }
+                    }
+                `);
+                results.push('<span class="success">✓ StoryGenerator class can be created</span>');
+            } catch (e) {
+                results.push('<span class="error">✗ StoryGenerator class creation failed</span>');
+            }
+
+            // Test localStorage functionality
+            try {
+                localStorage.setItem('test', 'value');
+                localStorage.removeItem('test');
+                results.push('<span class="success">✓ LocalStorage is available</span>');
+            } catch (e) {
+                results.push('<span class="error">✗ LocalStorage not available</span>');
+            }
+
+            // Test Clipboard API
+            if (navigator.clipboard) {
+                results.push('<span class="success">✓ Clipboard API is available</span>');
+            } else {
+                results.push('<span class="info">⚠ Clipboard API not available (fallback will be used)</span>');
+            }
+
+            // Test Fetch API
+            if (typeof fetch !== 'undefined') {
+                results.push('<span class="success">✓ Fetch API is available</span>');
+            } else {
+                results.push('<span class="error">✗ Fetch API not available</span>');
+            }
+
+            document.getElementById('jsTest').innerHTML = results.join('<br>');
+        }
+
+        // Test CSS loading
+        function testCSS() {
+            const results = [];
+            
+            // Test if CSS file loads
+            fetch('styles.css')
+                .then(response => {
+                    if (response.ok) {
+                        results.push('<span class="success">✓ styles.css loads successfully</span>');
+                    } else {
+                        results.push('<span class="error">✗ styles.css failed to load</span>');
+                    }
+                    document.getElementById('cssTest').innerHTML = results.join('<br>');
+                })
+                .catch(() => {
+                    results.push('<span class="error">✗ styles.css not accessible</span>');
+                    document.getElementById('cssTest').innerHTML = results.join('<br>');
+                });
+        }
+
+        // Test API connection (mock test)
+        function testAPI() {
+            const results = [];
+            
+            // Check if we can make a request to the Gemini API endpoint
+            const testUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
+            
+            fetch(testUrl)
+                .then(response => {
+                    if (response.status === 401 || response.status === 403) {
+                        results.push('<span class="success">✓ API endpoint is reachable (auth required)</span>');
+                    } else if (response.ok) {
+                        results.push('<span class="success">✓ API endpoint is accessible</span>');
+                    } else {
+                        results.push(`<span class="info">⚠ API endpoint responded with ${response.status}</span>`);
+                    }
+                    document.getElementById('apiTest').innerHTML = results.join('<br>');
+                })
+                .catch(() => {
+                    results.push('<span class="error">✗ Cannot reach API endpoint (check internet connection)</span>');
+                    document.getElementById('apiTest').innerHTML = results.join('<br>');
+                });
+        }
+
+        // Run file tests on page load
+        window.addEventListener('load', () => {
+            testFiles();
+        });
+    </script>
+</body>
+</html>

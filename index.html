@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Story Generator - Create Amazing Stories with Google Gemini</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-feather-alt"></i>
+                    <h1>AI Story Generator</h1>
+                </div>
+                <p>Transform your ideas into captivating stories with the power of Google Gemini AI</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="generator-section">
+                <div class="form-container">
+                    <form id="storyForm" class="story-form">
+                        <div class="form-group">
+                            <label for="prompt">
+                                <i class="fas fa-lightbulb"></i>
+                                Story Prompt
+                            </label>
+                            <textarea 
+                                id="prompt" 
+                                name="prompt" 
+                                placeholder="Enter your story idea, theme, or keywords..."
+                                rows="4"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="genre">
+                                    <i class="fas fa-book"></i>
+                                    Genre
+                                </label>
+                                <select id="genre" name="genre" required>
+                                    <option value="">Select a genre</option>
+                                    <option value="fantasy">Fantasy</option>
+                                    <option value="scifi">Science Fiction</option>
+                                    <option value="mystery">Mystery</option>
+                                    <option value="romance">Romance</option>
+                                    <option value="thriller">Thriller</option>
+                                    <option value="horror">Horror</option>
+                                    <option value="adventure">Adventure</option>
+                                    <option value="historical">Historical Fiction</option>
+                                    <option value="comedy">Comedy</option>
+                                    <option value="drama">Drama</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tone">
+                                    <i class="fas fa-palette"></i>
+                                    Tone & Style
+                                </label>
+                                <select id="tone" name="tone" required>
+                                    <option value="">Select a tone</option>
+                                    <option value="funny">Funny & Humorous</option>
+                                    <option value="serious">Serious & Dramatic</option>
+                                    <option value="romantic">Romantic & Heartwarming</option>
+                                    <option value="dark">Dark & Mysterious</option>
+                                    <option value="whimsical">Whimsical & Playful</option>
+                                    <option value="inspirational">Inspirational & Uplifting</option>
+                                    <option value="suspenseful">Suspenseful & Thrilling</option>
+                                    <option value="nostalgic">Nostalgic & Reflective</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="length">
+                                <i class="fas fa-ruler-horizontal"></i>
+                                Story Length
+                            </label>
+                            <select id="length" name="length" required>
+                                <option value="short">Short (100-200 words)</option>
+                                <option value="medium" selected>Medium (200-400 words)</option>
+                                <option value="long">Long (400-600 words)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="generate-btn" id="generateBtn">
+                            <i class="fas fa-magic"></i>
+                            Generate Story
+                        </button>
+                    </form>
+                </div>
+
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <div class="story-header">
+                        <h3>Your Generated Story</h3>
+                        <div class="story-actions">
+                            <button class="action-btn" id="copyBtn" title="Copy story">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn" id="downloadBtn" title="Download story">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="action-btn" id="regenerateBtn" title="Generate new story">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="story-content" id="storyContent">
+                        <!-- Generated story will appear here -->
+                    </div>
+                </div>
+
+                <div class="loading-container" id="loadingContainer" style="display: none;">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <p>Creating your story...</p>
+                </div>
+
+                <div class="error-container" id="errorContainer" style="display: none;">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>Oops! Something went wrong</h4>
+                    <p id="errorMessage">Unable to generate story. Please try again.</p>
+                    <button class="retry-btn" id="retryBtn">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            </section>
+
+            <section class="features-section">
+                <h2>Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI-Powered</h3>
+                        <p>Powered by Google Gemini for creative and coherent storytelling</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-sliders-h"></i>
+                        <h3>Customizable</h3>
+                        <p>Choose from multiple genres, tones, and story lengths</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Instant Generation</h3>
+                        <p>Get unique stories in seconds with our fast AI processing</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-share-alt"></i>
+                        <h3>Easy Sharing</h3>
+                        <p>Copy, download, or share your generated stories instantly</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 AI Story Generator. Powered by Google Gemini.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
